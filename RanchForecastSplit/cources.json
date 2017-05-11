@@ -1,0 +1,23 @@
+{
+    "courses": [
+        {   "title": "Cocoa Fast Track Bootcamp",
+            "upcoming": [
+            {
+                    "end_date": "2014-10-31",
+                    "instructors": "Adam Preble",
+                    "start_date": "2014-10-27"
+                }
+            ],
+            "url": "https://www.apple.com"
+        },
+        {   "title": "Beginning iOS (iPhone/iPad)",
+            "upcoming": [
+                {   "end_date": "2014-10-17",
+                    "instructors": "Christian Keur, John Gallagher",
+                    "start_date": "2014-10-11"
+                }
+            ],
+            "url": "https://www.apple.com"
+        }
+    ]
+}
