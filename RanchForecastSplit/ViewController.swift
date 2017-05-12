@@ -14,20 +14,6 @@ class ViewController: NSSplitViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
-//        fetcher.fetchCoursesUsingCompletionHandler { (result) in
-//            switch result {
-//            case .Success(let courses):
-//                print("Got courses: \(courses)")
-//                self.courses = courses
-//            case .Failure(let error):
-//                print("Got error: \(error)")
-//                NSAlert(error: error).runModal()
-//                self.courses = []
-//            }
-//        }
     }
     override var representedObject: Any? {
         didSet {

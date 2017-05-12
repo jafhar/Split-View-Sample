@@ -24,36 +24,6 @@ class ScheduleFetcher {
     
     func fetchCoursesUsingCompletionHandler(completionHandler:
         @escaping (FetchCoursesResult) -> (Void)) {
-//        let url = NSURL(string: "https://bookapi.bignerdranch.com/courses.json")!
-//        let request = NSURLRequest(url: url as URL)
-//        let task = session.dataTask(with: request as URLRequest, completionHandler: {
-//            (data, response, error) -> Void in
-//            var result: FetchCoursesResult
-//            
-//            if data == nil {
-//                result = .Failure(error! as NSError)
-//            }
-//            else if let response = response as? HTTPURLResponse {
-//                print("\(String(describing: data?.count)) bytes, HTTP \(response.statusCode).")
-//                if response.statusCode == 200 {
-//                    result = try! self.resultFromData(data: data! as NSData)
-//                }
-//                else {
-//                    let error = self.errorWithCode(1, localizedDescription:
-//                        "Bad status code \(response.statusCode)")
-//                    result = .Failure(error)
-//                }
-//            }
-//            else {
-//                let error = self.errorWithCode(1, localizedDescription:
-//                    "Unexpected response object.")
-//                result = .Failure(error)
-//            }
-//            OperationQueue.main.addOperation({
-//                completionHandler(result)
-//            })
-//        })
-//        task.resume()
         var result: FetchCoursesResult
         
         let url = Bundle.main.url(forResource: "cources", withExtension: "json")
@@ -104,9 +74,6 @@ class ScheduleFetcher {
         print("\(error.localizedDescription)")
         return .Failure(error as NSError)
         }
-//        let topLevelDict = JSONSerialization.JSONObjectWithData(data,
-//                                                                  options: JSONSerialization.ReadingOptions.allZeros,
-//                                                                  error: &error) as! NSDictionary?
         
         if let topLevelDict = topLevelDict {
             let courseDicts = topLevelDict["courses"] as! [NSDictionary]
