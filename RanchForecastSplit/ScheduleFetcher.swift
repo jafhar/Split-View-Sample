@@ -54,28 +54,28 @@ class ScheduleFetcher {
     //MARK - Common method to represent error while fetching data from the server
     //currently not using, was used earlier for web request
     private func errorWithCode(_ code: Int, localizedDescription: String) -> NSError {
-        return NSError(domain: "ScheduleFetcher",
+        return NSError(domain: Constant.domainName,
                        code: code,
                        userInfo: [NSLocalizedDescriptionKey: localizedDescription])
     }
     
     //MARK - Creating Course object from Dictionary
     private func courseFromDictionary(courseDict: NSDictionary) -> Course? {
-        let title = courseDict["title"] as? String
-        let urlString = courseDict["url"] as? String
-        let upcomingArray = courseDict["upcoming"] as? [NSDictionary]
+        let title = courseDict[Constant.titleKey] as? String
+        let urlString = courseDict[Constant.urlKey] as? String
+        let upcomingArray = courseDict[Constant.upcomingKey] as? [NSDictionary]
         let nextUpcomingDict = upcomingArray?.first
-        let nextStartDateString = nextUpcomingDict?["start_date"] as? String
+        let nextStartDateString = nextUpcomingDict?[Constant.startDateKey] as? String
         
         let url:NSURL
         if let stringForURL = urlString {
             url = NSURL(string: (stringForURL))!
         }
         else {
-            url = NSURL(string:"https://www.apple.com")!
+            url = NSURL(string:Constant.defaultURL)!
         }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = Constant.defaultDateFormat
         let nextStartDate : Date
         if let startDateString = nextStartDateString  {
             nextStartDate = dateFormatter.date(from: startDateString)!
@@ -87,7 +87,7 @@ class ScheduleFetcher {
             return Course(title: title, url: url, nextStartDate: nextStartDate as NSDate)
         }
         else {
-            return Course(title: "Default Text", url: url, nextStartDate: nextStartDate as NSDate)
+            return Course(title: Constant.defaultTitle, url: url, nextStartDate: nextStartDate as NSDate)
         }
     }
     
@@ -102,7 +102,7 @@ class ScheduleFetcher {
         }
         
         if let topLevelDict = topLevelDict {
-            let courseDicts = topLevelDict["courses"] as? [NSDictionary]
+            let courseDicts = topLevelDict[Constant.courcesKey] as? [NSDictionary]
             var courses: [Course] = []
             if let courseDicts = courseDicts {
                 for courseDict in courseDicts {
@@ -113,12 +113,12 @@ class ScheduleFetcher {
                 return .Success(courses)
             }
             else {
-                return .Failure(NSError.init(domain: "Test", code: 404, userInfo: nil))
+                return .Failure(NSError.init(domain: Constant.domainName, code: 404, userInfo: nil))
             }
         }
         else
         {
-            return .Failure(NSError.init(domain: "Test", code: 404, userInfo: nil))
+            return .Failure(NSError.init(domain: Constant.domainName, code: 404, userInfo: nil))
         }
     }
 }

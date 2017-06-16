@@ -19,7 +19,7 @@ class MainSplitViewController: NSSplitViewController, CourseListViewControllerDe
         return masterItem.viewController as! WebViewController
     }
     
-    private let defaultURL = NSURL(string:"https://www.apple.com")
+    private let defaultURL = NSURL(string:Constant.defaultURL)
     
     override func viewDidLoad() {
         super.viewDidLoad()
