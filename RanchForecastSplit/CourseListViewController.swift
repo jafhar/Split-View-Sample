@@ -17,9 +17,9 @@ class CourseListViewController: NSViewController {
     
     weak var delegate: CourseListViewControllerDelegate? = nil
     
-    dynamic var courses: [Course] = []
+    private dynamic var courses: [Course] = []
     
-    let fetcher = ScheduleFetcher()
+    private let fetcher = ScheduleFetcher()
     
     @IBOutlet var arrayController: NSArrayController!
 
@@ -27,21 +27,23 @@ class CourseListViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
         
-        fetcher.fetchCoursesUsingCompletionHandler(completionHandler: {(result) in
+        //Fetching data
+        fetcher.fetchCoursesUsingCompletionHandler(completionHandler: {[weak self](result) in
+            guard let weakSelf = self else {return}
             switch result {
             case .Success(let courses):
                 print("Got courses : \(courses)")
-                self.courses = courses
+                weakSelf.courses = courses
             case .Failure(let error):
                 print("Got error : \(error)")
                 NSAlert (error:error).runModal()
-                self.courses = []
+                weakSelf.courses = []
             }})
     }
     
+    //MARK : Action for selected row
     @IBAction func selectCourse(sender: AnyObject) {
         let selectedCourse = arrayController.selectedObjects.first as! Course?
         delegate?.courseListViewController(viewController: self, selectedCourse: selectedCourse)
     }
-    
 }

@@ -15,13 +15,15 @@ class ScheduleFetcher {
         case Failure(NSError)
     }
     
-    let session: URLSession
+    //This was used earlier for web service part which's removed
+    private let session: URLSession
     
     init() {
         let config = URLSessionConfiguration.default
         session = URLSession(configuration: config)
     }
     
+    //MARK - Fetching Course data from json , we can load it using web service request too
     func fetchCoursesUsingCompletionHandler(completionHandler:
         @escaping (FetchCoursesResult) -> (Void)) {
         var result: FetchCoursesResult
@@ -30,11 +32,18 @@ class ScheduleFetcher {
         
         if let url = url {
             do {
-                let data = try Data.init(contentsOf:url, options: Data.ReadingOptions.init(rawValue: 1))
+                let data = try Data(contentsOf: url, options: .alwaysMapped)
                 print("\(String(describing: data.count))")
-                result = try! self.resultFromData(data: data as NSData)
+                
+                //handle the error thrown
+                do {
+                    result = try self.resultFromData(data: data as NSData)
+                } catch let error {
+                    result = .Failure(error as NSError)
+                }
+                
             } catch let error {
-                 result = .Failure(error as NSError)
+                result = .Failure(error as NSError)
             }
             OperationQueue.main.addOperation({
                 completionHandler(result)
@@ -42,54 +51,75 @@ class ScheduleFetcher {
         }
     }
     
-    func errorWithCode(_ code: Int, localizedDescription: String) -> NSError {
+    //MARK - Common method to represent error while fetching data from the server
+    //currently not using, was used earlier for web request
+    private func errorWithCode(_ code: Int, localizedDescription: String) -> NSError {
         return NSError(domain: "ScheduleFetcher",
                        code: code,
                        userInfo: [NSLocalizedDescriptionKey: localizedDescription])
     }
     
-    
-    func courseFromDictionary(courseDict: NSDictionary) -> Course? {
-        let title = courseDict["title"] as! String
-        let urlString = courseDict["url"] as! String
-        let upcomingArray = courseDict["upcoming"] as! [NSDictionary]
-        let nextUpcomingDict = upcomingArray.first!
-        let nextStartDateString = nextUpcomingDict["start_date"] as! String
+    //MARK - Creating Course object from Dictionary
+    private func courseFromDictionary(courseDict: NSDictionary) -> Course? {
+        let title = courseDict["title"] as? String
+        let urlString = courseDict["url"] as? String
+        let upcomingArray = courseDict["upcoming"] as? [NSDictionary]
+        let nextUpcomingDict = upcomingArray?.first
+        let nextStartDateString = nextUpcomingDict?["start_date"] as? String
         
-        let url = NSURL(string: urlString)!
-        
+        let url:NSURL
+        if let stringForURL = urlString {
+            url = NSURL(string: (stringForURL))!
+        }
+        else {
+            url = NSURL(string:"https://www.apple.com")!
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let nextStartDate = dateFormatter.date(from: nextStartDateString)!
-        
-        return Course(title: title, url: url, nextStartDate: nextStartDate as NSDate)
+        let nextStartDate : Date
+        if let startDateString = nextStartDateString  {
+            nextStartDate = dateFormatter.date(from: startDateString)!
+        }
+        else {
+            nextStartDate = Date()
+        }
+        if let title = title {
+            return Course(title: title, url: url, nextStartDate: nextStartDate as NSDate)
+        }
+        else {
+            return Course(title: "Default Text", url: url, nextStartDate: nextStartDate as NSDate)
+        }
     }
     
-    
-    func resultFromData(data: NSData) throws-> FetchCoursesResult {
+    //MARK - preparing FetchCoursesResult
+    private func resultFromData(data: NSData) throws-> FetchCoursesResult {
         var topLevelDict:NSDictionary?
-       do {
-        topLevelDict = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
-       } catch let error {
-        print("\(error.localizedDescription)")
-        return .Failure(error as NSError)
+        do {
+            topLevelDict = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
+        } catch let error {
+            print("\(error.localizedDescription)")
+            return .Failure(error as NSError)
         }
         
         if let topLevelDict = topLevelDict {
-            let courseDicts = topLevelDict["courses"] as! [NSDictionary]
+            let courseDicts = topLevelDict["courses"] as? [NSDictionary]
             var courses: [Course] = []
-            for courseDict in courseDicts {
-                if let course = courseFromDictionary(courseDict: courseDict) {
-                    courses.append(course)
+            if let courseDicts = courseDicts {
+                for courseDict in courseDicts {
+                    if let course = courseFromDictionary(courseDict: courseDict) {
+                        courses.append(course)
+                    }
                 }
+                return .Success(courses)
             }
-            return .Success(courses)
+            else {
+                return .Failure(NSError.init(domain: "Test", code: 404, userInfo: nil))
+            }
         }
         else
         {
             return .Failure(NSError.init(domain: "Test", code: 404, userInfo: nil))
         }
-
     }
 }
 

@@ -9,8 +9,8 @@
 import Cocoa
 
 class ViewController: NSSplitViewController {
-    let fetcher = ScheduleFetcher()
-    dynamic var courses: [Course] = []
+    private let fetcher = ScheduleFetcher()
+    private dynamic var courses: [Course] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
