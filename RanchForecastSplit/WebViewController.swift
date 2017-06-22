@@ -21,7 +21,7 @@ class WebViewController: NSViewController {
         view.frame.size = NSMakeSize(200.0, 100.0)
     }
     
-    //MARK : load the web page with url
+    //MARK: load the web page with url
     func load(url: NSURL) {
         let request = NSURLRequest(url:url as URL)
         webView.load(request as URLRequest)

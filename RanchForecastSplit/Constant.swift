@@ -7,7 +7,7 @@
 //
 
 struct Constant {
-    static let defaultURL = "https://www.apple.com"
+    static let defaultURL = "https://developer.apple.com/swift/"
     static let defaultDateFormat = "yyyy-MM-dd"
     static let courcesKey = "courses"
     static let titleKey = "title"

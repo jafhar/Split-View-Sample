@@ -50,7 +50,7 @@
 		2E4A7DF51EBB13D800431BDA = {
 			isa = PBXGroup;
 			children = (
-				2E4A7E001EBB13D800431BDA /* RanchForecastSplit */,
+				2E4A7E001EBB13D800431BDA /* SplitViewSample */,
 				2E4A7DFF1EBB13D800431BDA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,23 +63,72 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2E4A7E001EBB13D800431BDA /* RanchForecastSplit */ = {
+		2E4A7E001EBB13D800431BDA /* SplitViewSample */ = {
 			isa = PBXGroup;
 			children = (
-				2E4A7E011EBB13D800431BDA /* AppDelegate.swift */,
-				2E4A7E051EBB13D800431BDA /* Assets.xcassets */,
-				2E4A7E071EBB13D800431BDA /* Main.storyboard */,
-				2E4A7E0A1EBB13D800431BDA /* Info.plist */,
-				2E4A7E141EBB686800431BDA /* cources.json */,
+				2E8AF53D1EFBEA1800A8F658 /* Model */,
+				2E8AF53E1EFBEA2600A8F658 /* Views */,
+				2E8AF53F1EFBEA2D00A8F658 /* Controllers */,
+				2E8AF5411EFBEA6500A8F658 /* JSON */,
+				2E8AF5401EFBEA4000A8F658 /* Common */,
+				2E8AF5421EFBEABF00A8F658 /* Supporting Files */,
+			);
+			name = SplitViewSample;
+			path = RanchForecastSplit;
+			sourceTree = "<group>";
+		};
+		2E8AF53D1EFBEA1800A8F658 /* Model */ = {
+			isa = PBXGroup;
+			children = (
 				2E4A7E121EBB15AA00431BDA /* Course.swift */,
-				2E4A7E101EBB152400431BDA /* ScheduleFetcher.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2E8AF53E1EFBEA2600A8F658 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2E4A7E071EBB13D800431BDA /* Main.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		2E8AF53F1EFBEA2D00A8F658 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				2E4A7E031EBB13D800431BDA /* ViewController.swift */,
 				2EB89F4F1EBC72B7004F98E2 /* CourseListViewController.swift */,
 				2EB89F531EBCACE1004F98E2 /* WebViewController.swift */,
 				2EB89F511EBCACA7004F98E2 /* MainSplitViewController.swift */,
-				2E69A5841EF3DF0B005B6662 /* Constant.swift */,
 			);
-			path = RanchForecastSplit;
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		2E8AF5401EFBEA4000A8F658 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2E69A5841EF3DF0B005B6662 /* Constant.swift */,
+				2E4A7E011EBB13D800431BDA /* AppDelegate.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		2E8AF5411EFBEA6500A8F658 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				2E4A7E101EBB152400431BDA /* ScheduleFetcher.swift */,
+				2E4A7E141EBB686800431BDA /* cources.json */,
+			);
+			name = JSON;
+			sourceTree = "<group>";
+		};
+		2E8AF5421EFBEABF00A8F658 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2E4A7E051EBB13D800431BDA /* Assets.xcassets */,
+				2E4A7E0A1EBB13D800431BDA /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -41,7 +41,7 @@ class CourseListViewController: NSViewController {
             }})
     }
     
-    //MARK : Action for selected row
+    //MARK:- Action for selected row
     @IBAction func selectCourse(sender: AnyObject) {
         let selectedCourse = arrayController.selectedObjects.first as! Course?
         delegate?.courseListViewController(viewController: self, selectedCourse: selectedCourse)

@@ -23,7 +23,7 @@ class ScheduleFetcher {
         session = URLSession(configuration: config)
     }
     
-    //MARK - Fetching Course data from json , we can load it using web service request too
+    //MARK:- Fetching Course data from json , we can load it using web service request too
     func fetchCoursesUsingCompletionHandler(completionHandler:
         @escaping (FetchCoursesResult) -> (Void)) {
         var result: FetchCoursesResult
@@ -51,7 +51,7 @@ class ScheduleFetcher {
         }
     }
     
-    //MARK - Common method to represent error while fetching data from the server
+    //MARK:- - Common method to represent error while fetching data from the server
     //currently not using, was used earlier for web request
     private func errorWithCode(_ code: Int, localizedDescription: String) -> NSError {
         return NSError(domain: Constant.domainName,
@@ -59,7 +59,7 @@ class ScheduleFetcher {
                        userInfo: [NSLocalizedDescriptionKey: localizedDescription])
     }
     
-    //MARK - Creating Course object from Dictionary
+    //MARK:- - Creating Course object from Dictionary
     private func courseFromDictionary(courseDict: NSDictionary) -> Course? {
         let title = courseDict[Constant.titleKey] as? String
         let urlString = courseDict[Constant.urlKey] as? String
@@ -91,7 +91,7 @@ class ScheduleFetcher {
         }
     }
     
-    //MARK - preparing FetchCoursesResult
+    //MARK:- - preparing FetchCoursesResult
     private func resultFromData(data: NSData) throws-> FetchCoursesResult {
         var topLevelDict:NSDictionary?
         do {

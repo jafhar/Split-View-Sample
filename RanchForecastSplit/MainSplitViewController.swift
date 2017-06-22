@@ -30,7 +30,7 @@ class MainSplitViewController: NSSplitViewController, CourseListViewControllerDe
     }
     
     
-    //MARK : CourseListViewControllerDelegate
+    //MARK: CourseListViewControllerDelegate
     
     func courseListViewController(viewController: CourseListViewController, selectedCourse: Course?) {
         if let course = selectedCourse {
